@@ -1,0 +1,59 @@
+Policy U1
+
+Permission: U1-P2
+A permission to 
+	derive data when derivation is irreversible from 
+		dynamic S&P 500 Futures & Options
+			not more than 3 specific points in time in a single calendar day and when delivered less than 10 minutes  after origination
+		and dynamic S&P 500 Futures & Options
+			when delivered Greater than or equal to 8 hours  after origination
+		and static end of day S&P 500 Futures & Options
+ 	for trading warrants
+ 
+Permission: U1-P1
+A permission to 
+	derive data when derivation is irreversible from 
+		static end of day S&P 500 Futures & Options
+		and dynamic S&P 500 Futures & Options
+			when delivered less than 10 minutes  after origination
+		and dynamic S&P 500 Futures & Options
+			not more than 3 specific points in time in a single calendar day and when delivered less than 10 minutes  after origination
+		and dynamic S&P 500 Futures & Options
+			when delivered less than 8 hours  after origination and when delivered Greater than or equal to 10 minutes  after origination
+		and dynamic S&P 500 Futures & Options
+			when delivered Greater than or equal to 8 hours  after origination
+ 	for trading warrants
+ 	if
+ 		attribution is stated
+ 	and if 
+ 		payment is made 
+ 		yearly or the payment amount is 2500.0 in United States dollar or http://www.w3.org/ns/odrl/2/snapshotCount  -NOT FOUND- 
+ 	and if 
+ 		audit is accepted
+ 	and if 
+ 		 Next Policy is: V1
+ 	 		Policy V1
+ 	 		
+ 	 		Permission: V1-P2
+ 	 		A permission to 
+ 	 			Distribute 
+ 	 				dynamic S&P 500 Futures & Options
+ 	 					when delivered less than 10 minutes  after origination
+ 	 		 	if
+ 	 		 		 Next Policy is: W1
+ 	 		 	 		Policy W1
+ 	 		 	 		
+ 	 		 	 		Permission: W1-P1
+ 	 		 	 		A permission to 
+ 	 		 	 			use  
+ 	 		 	 				dynamic S&P 500 Futures & Options
+ 	 		 	 					when delivered less than 10 minutes  after origination
+ 	 		 	 		 	for trading warrants
+ 	 		 
+ 	 		Permission: V1-P1
+ 	 		A permission to 
+ 	 			use  
+ 	 				 output of U1-P1
+ 	 		 	for trading warrants
+ 	 		 	and 
+ 	 		 	when the end recipient is internal

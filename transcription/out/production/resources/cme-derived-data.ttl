@@ -1,0 +1,238 @@
+@prefix rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: 	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+@prefix odrl: 	<http://www.w3.org/ns/odrl/2/> .
+@prefix prov:	<http://www.w3.org/ns/prov#> .
+@prefix rbim:	<http://example.org/rbim/> . #removed /tr/ to be consistent with catA
+@prefix reg:	<http://example.org/tr/registry/> .
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: 	<http://www.w3.org/2002/07/owl#> .
+@prefix vs:		<http://www.w3.org/TR/vocabstatus/> .
+#@prefix : 		<http://example.org/> . I replaced base prefix with the following.
+@prefix : 	<http://www.w3.org/ns/odrl/2/>.
+@prefix cc: 	<http://creativecommons.org/ns#> .
+
+
+# Don't understand 2.11 - "Calculation Agent"
+
+# POLICIES
+:U1 				a 						odrl:Offer ;
+					odrl:assigner 			<https://permid.org/1-4295899615> ; # CME
+					odrl:permission			:U1-P1 , :U1-P2 .
+
+
+# PERMISSIONS
+:U1-P1 				a 						odrl:Permission ;
+					odrl:target				:A1 , :A2 , :A3 , :A4 , :A5 ;
+					odrl:action 			:U-Ac1 ;
+					odrl:output 			:O1 ;
+					odrl:constraint 		:C24 ; 
+					odrl:duties				:U1-P1-D1 , :U1-P1-D2 , :U1-P1-D3 , :U1-P1-D4 .
+
+:C24				a						odrl:Constraint ;
+					odrl:leftOperand		odrl:purpose ;
+					odrl:operator			odrl:eq ;
+					odrl:rightOperand		rbim:tradingWarrants .
+
+:U1-P2 				a 						odrl:Permission ;
+					odrl:target				:A3 , :A4 , :A5 ;
+					odrl:action 			:U-Ac1 ;
+					odrl:output 			:O1 ; #O1
+					odrl:constraint 		:C24 ; 
+					odrl:duties				:U1-P2-D1 , :U1-P2-D2 , :U1-P2-D3 , :U1-P2-D4 .
+
+
+#Policy 2
+:V1					a 						odrl:Offer ;
+					odrl:permission			:V1-P1 , :V1-P2 .
+
+:V1-P1 				a 						odrl:Permission ;
+					odrl:target				:O1 ; #O1
+					odrl:action 			odrl:use ; 
+					odrl:constraint			:C2 , :C24 .
+
+:C2					a						odrl:Constraint ;
+					odrl:leftOperand		rbim:RecipientModel ; #changed to capital R as in ontology.
+					odrl:operator			odrl:eq ;
+					odrl:rightOperand		rbim:internalModel .
+
+:V1-P2 				a 						odrl:Permission ;
+					odrl:target				:A1 ; #O1
+					odrl:action 			odrl:distribute ; 
+#					odrl:constraint			:C23 ;
+					odrl:duties				:V1-P2-D1 .
+
+:C23				a						odrl:Constraint ;
+					odrl:leftOperand		rbim:recipientModel ;
+					odrl:operator			odrl:eq ;
+					odrl:rightOperand		rbim:externalModel .
+
+#Policy 3
+
+:W1					a 						odrl:Set ;
+					odrl:permission			:W1-P1 .
+
+:W1-P1 				a 						odrl:Permission ;
+					odrl:target				:A1 ; #O1
+					odrl:action 			odrl:use ;
+					odrl:constraint			:C24 .
+
+
+# ASSETS					
+:A1					a						odrl:Asset ;
+					rdf:value				:R1 ;
+					odrl:refinement			:C3 .
+
+:C3 				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:timelinessOfDelivery ;
+					odrl:operator 			odrl:lt ;
+					odrl:rightOperand 		"PT10M"^^xsd:duration .
+
+
+:A4					a						odrl:Asset ;
+					rdf:value				:R1 ;
+					odrl:refinement			:C13 .
+
+:C13				a						odrl:LogicalConstraint ;
+					odrl:and				:C3 , :C14 .
+
+:C14 				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:snapshotCount ;
+					odrl:operator 			odrl:eq ;
+					odrl:rightOperand 		"3"^^xsd:integer.
+
+
+:A2					a						odrl:Asset ;
+					rdf:value				:R1 ;
+					odrl:refinement			:C4 .
+
+:C4					a						odrl:LogicalConstraint ;
+					odrl:and				:C5 , :C6 .
+
+:C5 				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:timelinessOfDelivery ;
+					odrl:operator 			odrl:gteq ;
+					odrl:rightOperand 		"PT10M"^^xsd:duration .
+
+:C6					a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:timelinessOfDelivery ;
+					odrl:operator 			odrl:lt ;
+					odrl:rightOperand 		"PT8H"^^xsd:duration .
+
+
+:A3					a						odrl:Asset ;
+					rdf:value				:R2 .
+
+
+:A5					a						odrl:Asset ;
+					rdf:value				:R1 ;
+					odrl:refinement			:C15 ;
+					rbim:contentNature		rbim:historical .
+
+:C15				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:timelinessOfDelivery ;
+					odrl:operator 			odrl:gteq ;
+					odrl:rightOperand 		"PT8H"^^xsd:duration .					
+
+
+:R1					a 						rbim:Resource ;
+                    rdfs:label             "S&P 500 Futures & Options";
+					rbim:contentNature		rbim:dynamic .
+
+:R2					a 						rbim:Resource ;
+                    rdfs:label             "S&P 500 Futures & Options";
+					rbim:contentNature		rbim:endOfDay . #changed from staticEOD (does not exist in rbim ontology).
+
+
+
+:O1					a						odrl:Asset ;
+					odrl:refinement			:C22 .
+
+:C22 				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:assetClass ; # derivedWork
+					odrl:operator 			odrl:eq ;
+					odrl:rightOperand 		rbim:warrants .
+
+# ACTIONS
+
+:U-Ac1				a 						odrl:Action ;
+ 					rdf:value 				odrl:derive ;
+ 					odrl:refinement 		:C12 . # 2.4
+
+:C12				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:derivationType ;
+					odrl:operator 			odrl:eq ;
+					odrl:rightOperand 		rbim:irreversible .
+
+# DUTIES
+
+:U1-P1-D1			a 						odrl:Duty ;
+					odrl:action 			odrl:attribute ;
+					cc:notice 				"CME Group Market Data is used under license as a source of information for certain [LICENSEE/LICENSEE GROUP] products. CME Group has no other connection to [LICENSEE/LICENSEE GROUP] products and services and does not sponsor, endorse, recommend or promote any [LICENSEE/LICENSEE GROUP] products or services. CME Group has no obligation or liability in connection with the [LICENSEE/LICENSEE GROUP] products and services. CME Group does not guarantee the accuracy and/or the completeness of any Market Data licensed to [LICENSEE/LICENSEE GROUP] and shall not have any liability for any errors, omissions, or interruptions therein. there are no third-party beneficiaries of any agreements or arrangements between CME Group and [LICENSEE/LICENSEE GROUP]." .
+
+:U1-P1-D2			a 						odrl:Duty ;
+					odrl:action 			rbim:acceptAudit ;
+					rbim:auditingParty 		<https://permid.org/1-4295899615> ; # CME
+					rbim:processReference	<https://www.cmegroup.com/market-data/files/cme-derived-data-license-agreement/7> .
+
+#:U1-P1-D3			a 						odrl:Duty ;
+#					odrl:action 			odrl:obtainConsent ; # New product: Warrant -> Certificate
+#					odrl:consentingParty 	<https://permid.org/1-4295899615> ; # CME
+#					rbim:processReference	<https://www.cmegroup.com/market-data/files/cme-derived-data-license-agreement/2/7> .
+
+:U1-P1-D3			a 						odrl:Duty ;
+					odrl:action 			odrl:compensate ;
+					odrl:constraint         :C25 . # changed from C22 to C25 as there is already another C22.
+
+:C25				a						odrl:LogicalConstraint ;
+					odrl:and				:C16 . # Showing just the one payment scheme covering the first five instruments from Series 1
+
+:C16				a						odrl:LogicalConstraint ;
+					odrl:or				:C17 , :C20 , :C21 . #was and, changed it myself after discussing it with Ben.
+
+:C17				a 						odrl:Constraint ;
+					odrl:leftOperand 		odrl:snapshotCount ; #Changed from odrl:count as it did not exist in ontology.
+					odrl:operator 			odrl:lteq ;
+					odrl:rightOperand 		"5"^^xsd:integer ; # changed from 5.
+					odrl:unitOfCount 		:RO1 .
+
+:RO1				a 						odrl:RightOperand ;
+					rdf:value 				rbim:Instrument ;
+					odrl:refinement 		:C19 .
+
+:C19				a 						odrl:Constraint ;
+					odrl:leftOperand 		rbim:source ;
+					odrl:operator 			odrl:isAnyOf ;
+					odrl:rightOperand 		<CME_Series_1_Instrument_List> .
+
+:C20	 			a 						odrl:Constraint ;
+					odrl:leftOperand		odrl:payAmount ;
+					odrl:operator 			odrl:eq ;
+					odrl:rightOperand 		"2500.00"^^xsd:float ;
+					odrl:unit 				<https://www.wikidata.org/wiki/Q4917> ; # US dollar
+					odrl:unitOfCount 		"P1M"^^xsd:duration, rbim:Instrument .
+
+:C21  				a 						odrl:Constraint ;
+					odrl:leftOperand 		odrl:timeInterval ;
+					odrl:operator 			odrl:eq ;
+					odrl:rightOperand 		"P1Y"^^xsd:duration .
+
+
+:U1-P1-D4 			a 						odrl:Duty ;
+					odrl:action 			odrl:nextPolicy ;
+					odrl:target 			:V1 .
+
+
+:V1-P2-D1			a 						odrl:Duty ;
+					odrl:action 			odrl:nextPolicy ;
+					odrl:target         	:W1 .
+
+
+:V1-P2-D2			a 						odrl:Duty ;
+					odrl:action 			odrl:obtainConsent ;
+					odrl:consentingParty 	<https://permid.org/1-4295899615> ; # CME
+					rbim:processReference	<https://www.cmegroup.com/market-data/files/cme-derived-data-license-agreement/2/1/b> .
+					# needs to be versioned ....
+
+
+

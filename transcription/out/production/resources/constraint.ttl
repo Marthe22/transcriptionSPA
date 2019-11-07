@@ -1,0 +1,23 @@
+@base <http://www.w3.org/ns/odrl/2/> .
+@prefix : <http://www.w3.org/ns/odrl/2/> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rbim: <http://example.org/rbim/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#CONSTRAINTS
+:C8         a                   odrl:Constraint;
+            odrl:leftOperand    odrl:purpose;
+            odrl:operator       odrl:eq;
+            odrl:rightOperand   rbim:internalUse.
+
+:C3         a                   odrl:Constraint ;
+            odrl:leftOperand    rbim:timelinessOfDelivery ;
+	        odrl:operator       odrl:lt ;
+	        odrl:rightOperand   "PT10M"^^xsd:duration .
+
+:C2         a                   odrl:Constraint ;
+            odrl:leftOperand    rbim:timelinessOfDelivery ;
+	        odrl:operator       odrl:gt ;
+	        odrl:rightOperand   "PT5M"^^xsd:duration .

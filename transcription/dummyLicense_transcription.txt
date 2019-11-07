@@ -1,0 +1,10 @@
+Policy U1
+
+Permission: T1-P1
+A permission to 
+	derive data for internal use from
+	and use  
+		dynamic Eurodollar Futures Contract
+ 	when delivered less than 10 minutes  after origination and when delivered Greater than 5 minutes  after origination
+ 	if
+ 		payment is made  

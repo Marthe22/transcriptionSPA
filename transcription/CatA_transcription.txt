@@ -1,0 +1,22 @@
+Policy T1
+
+Permission: T1-P1
+A permission to 
+	derive data for internal use from
+	and run automated trading over 
+		static end of day Eurodollar Futures Contract EoD
+		and dynamic Eurodollar Futures Contract
+			when delivered less than 10 minutes  after origination
+		and dynamic Eurodollar Futures Contract
+			when delivered less than 8 hours  after origination and when delivered Greater than or equal to 10 minutes  after origination
+ 	when the end recipient is internal
+ 	if
+ 		use is reported 
+ 		per device
+ 		and 
+ 		monthly 
+ 	and if 
+ 		attribution is stated
+ 	and if 
+ 		payment is made 
+ 		in United States dollar and the payment amount is 1150.0 and monthly 

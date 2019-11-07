@@ -1,0 +1,135 @@
+@prefix rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: 	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+@prefix odrl: 	<http://www.w3.org/ns/odrl/2/> .
+@prefix prov:	<http://www.w3.org/ns/prov#> .
+@prefix rbim: <http://example.org/rbim/> .
+@prefix reg:	<http://example.org/tr/registry/> .
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix owl: 	<http://www.w3.org/2002/07/owl#> .
+@prefix vs:		<http://www.w3.org/TR/vocabstatus/> .
+@prefix : <http://www.w3.org/ns/odrl/2/> .
+@prefix cc: 	<http://creativecommons.org/ns#> .
+
+#POLICY
+
+:T1   a			odrl:Offer ;
+    odrl:assigner 	<https://permid.org/1-8589934184> ; # Refinitiv
+    odrl:permission	:T1-P1 .
+
+
+#RULES
+
+:T1-P1 		a 			    odrl:Permission ;
+			odrl:target		:A1, :A2, :A3 ;
+	        odrl:action 	rbim:tradeAutomatically, :D-A1 ;
+			odrl:constraint	:C2 ;
+			odrl:duties		:T1-P1-D1 , :T1-P1-D2 , :T1-P1-D3.
+
+
+#CONSTRAINTS
+:C2	    a				    odrl:Constraint ;
+	    odrl:leftOperand	rbim:RecipientModel;
+	    odrl:operator		odrl:eq ;
+	    odrl:rightOperand	rbim:internalModel, rbim:enterpriseModel .
+
+:C3 			a 				odrl:Constraint ;
+			odrl:leftOperand 	rbim:timelinessOfDelivery ;
+			odrl:operator 		odrl:lt ;
+			odrl:rightOperand 	"PT10M"^^xsd:duration .
+
+:C4			a				    odrl:LogicalConstraint ;
+			odrl:and			:C5 , :C6 .
+
+:C5 		a 				    odrl:Constraint ;
+			odrl:leftOperand 	rbim:timelinessOfDelivery ;
+			odrl:operator 		odrl:gteq ;
+			odrl:rightOperand 	"PT10M"^^xsd:duration .
+
+:C6			a 				    odrl:Constraint ;
+			odrl:leftOperand 	rbim:timelinessOfDelivery ;
+			odrl:operator 		odrl:lt ;
+			odrl:rightOperand 	"PT8H"^^xsd:duration .
+
+
+:C15 			a 				    odrl:Constraint ;
+				odrl:leftOperand 	odrl:timeInterval ;
+				odrl:operator 		odrl:eq ;
+				odrl:rightOperand 	"P1M"^^xsd:duration .
+
+:C16 			a 				    odrl:Constraint ;
+				odrl:leftOperand 	odrl:unitOfCount ;
+				odrl:operator 		odrl:eq ;
+				odrl:rightOperand 	rbim:device .
+
+
+:C7 			a 				    odrl:Constraint ;
+				odrl:leftOperand 	rbim:attribution ;
+				odrl:operator 		odrl:eq ;
+				odrl:rightOperand 	"The market data is the property of Chicago Mercantile Exchange Inc. or it’s licensors as applicable. All rights reserved, or otherwise licensed by Chicago Mercantile Exchange Inc." .
+
+:C8				a 				    odrl:Constraint ;
+				odrl:leftOperand 	odrl:purpose ;
+				odrl:operator 		odrl:eq ;
+				odrl:rightOperand 	rbim:internalUse .
+
+:C9	 		a 				    odrl:LogicalConstraint ;
+			odrl:and 			:C15 , :C10 , :C11 .
+
+:C10	 		a 				odrl:Constraint ;
+			odrl:leftOperand	odrl:payAmount ;
+			odrl:operator 		odrl:eq ;
+			odrl:rightOperand 	"1150.00"^^xsd:float .
+
+:C11 			a 				odrl:Constraint ;
+			odrl:leftOperand 	odrl:unit ;
+			odrl:operator 		odrl:eq ;
+			odrl:rightOperand <https://www.wikidata.org/wiki/Q4917> . # US dollar
+
+
+
+
+#ASSETS
+:A1			a				    odrl:Asset ;
+			rdf:value			:R1 ;
+			odrl:refinement		:C3 .
+
+:A2			a				    odrl:Asset ;
+			rdf:value			:R1 ;
+			odrl:refinement		:C4 .
+
+
+:A3			a				odrl:Asset ;
+			rdf:value			:R2 .
+
+#DUTIES
+:T1-P1-D1		a 				    odrl:Duty ;
+				odrl:action 		rbim:report ;
+				odrl:constraint 	:C15, :C16 .
+
+:T1-P1-D2		a 				    odrl:Duty ;
+				odrl:action 		odrl:attribute ;
+				odrl:constraint 	:C7 .
+
+:T1-P1-D3 		a 				    odrl:Duty ;
+			    odrl:action 		odrl:compensate ;
+			    odrl:constraint 	:C9 .
+
+
+#ACTIONS
+:D-A1			a 				    odrl:Action ;
+ 				rdf:value 			odrl:derive ;
+ 				odrl:refinement 	:C8 .
+
+
+
+
+#RESOURCES
+:R1		a				    rbim:Resource ;
+		rdfs:label 			"Eurodollar Futures Contract" ;
+		rbim:contentNature	rbim:dynamic .
+
+:R2		a				    rbim:Resource ;
+		rdfs:label 			"Eurodollar Futures Contract EoD" ;
+		rbim:contentNature	rbim:endOfDay .
+
