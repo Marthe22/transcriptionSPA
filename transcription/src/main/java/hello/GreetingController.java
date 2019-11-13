@@ -1,11 +1,9 @@
 package hello;
 
-import java.util.concurrent.atomic.AtomicLong;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class GreetingController {
@@ -21,8 +19,9 @@ public class GreetingController {
     }
 
     @CrossOrigin()
-    @RequestMapping("/transcript1")
-    public Transcripter transcripter(@RequestParam (value = "filename", defaultValue = "cme-derived-data") String filename) {
-        return new Transcripter(filename);
+    @PostMapping(value = "/transcript1", consumes = "multipart/form-data")
+    public Transcripter transcript(@RequestParam("file") MultipartFile file) {
+        Transcripter transcripter = new Transcripter(file);
+        return transcripter;
     }
 }

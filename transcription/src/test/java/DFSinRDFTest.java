@@ -1,3 +1,6 @@
+import hello.DFSinRDF;
+import hello.ODRLElement;
+import hello.Tree;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -27,7 +30,8 @@ public class DFSinRDFTest {
         Model model = ModelFactory.createDefaultModel();
         model.read(in, null, "TTL");
 
-        DFSinRDF dfSinRDF = new DFSinRDF(model, "http://www.w3.org/ns/odrl/2/" + policyType);
+        DFSinRDF dfSinRDF;
+        dfSinRDF = new DFSinRDF(model, "http://www.w3.org/ns/odrl/2/" + policyType);
         Tree tree = dfSinRDF.rdfDFSCaller();
         ODRLElement policy = (ODRLElement)tree.getRoot().getUserObject();
         String result = policy.toString();

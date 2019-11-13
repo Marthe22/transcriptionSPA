@@ -21,7 +21,11 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-log4j2:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.logging.log4j:log4j-slf4j-impl:2.11.2" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.26" level="project" />
+    <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-thymeleaf:2.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.jena:jena-shaded-guava:3.12.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.thymeleaf:thymeleaf:3.0.11.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.26" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.1.6.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:2.1.6.RELEASE" level="project" />
@@ -66,5 +70,7 @@
     <orderEntry type="library" name="Gradle: org.jboss.logging:jboss-logging:3.3.2.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-jcl:5.1.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.attoparser:attoparser:2.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Gradle: org.unbescape:unbescape:1.1.6.RELEASE" level="project" />
   </component>
 </module>

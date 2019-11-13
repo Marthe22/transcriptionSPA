@@ -44,8 +44,6 @@ public class MainDFS {
         }
 
         System.out.println(policy.toDefinition().keySet());
-        HTMLwriter htmLwriter = new HTMLwriter();
-        htmLwriter.writeHTML(result, filename);
 
 
     }
