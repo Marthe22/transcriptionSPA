@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ODRLpanel from './odrlPanel.js';
+import ODRLpanel from './ODRLpanel.js';
+import Uploader from './Uploader.js';
+import './App.scss';
 
 class App extends Component {
     state = {
@@ -33,10 +35,9 @@ class App extends Component {
             }
         }).then((response) => {
             this.setState({
-                Transcription : response.data.result
+                Transcription: response.data.result
             })
-                console.log("post response: ", response);
-            });
+        });
         /////===================================================================
         let reader = new FileReader();
         reader.readAsText(e.target.files[0]);
@@ -44,23 +45,21 @@ class App extends Component {
             this.setState(
                 { SelectedFileText: reader.result }
             )
-            console.log(this.state.SelectedFileText);
         };
 
     }
 
-
-
     render() {
         return (
+
             <div className="App">
-                <h1>Translate your ODRL license</h1>
-                <label>Upload Your File </label>
-                <input type="file" className="form-control" name="file" onChange={this.onFileChangeHandler} />
-
-                <ODRLpanel text={this.state.SelectedFileText} />
-                <ODRLpanel text={this.state.Transcription} />
-
+               <div className="logo"></div>
+                    <h1>Translate your ODRL license</h1>
+                <Uploader className="uploader" onFileChangeHandler={this.onFileChangeHandler} />
+                <div className="flexContainer">
+                    <ODRLpanel title='ODRL file' text={this.state.SelectedFileText} />
+                    <ODRLpanel title='NL transcription' text={this.state.Transcription} />
+                </div>
             </div>
 
         );
@@ -68,5 +67,4 @@ class App extends Component {
 
 }
 
-export default App
-    ;
+export default App;
