@@ -10,7 +10,7 @@ public class Tree{
         this.root = root;
     }
 
-    protected  DefaultMutableTreeNode getRoot(){
+    public  DefaultMutableTreeNode getRoot(){
         return root;
     }
 
